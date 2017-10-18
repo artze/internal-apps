@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IMEI App</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+</head>
+<body>
+	<%- include('partials/header-nav') %>
+
+	<div class="container-fluid">
+		<div class="row pull-down">
+			<div class="col-lg-4 col-lg-offset-4">		
+				<h1 class="text-center">Upload CSV</h2>
+
+				<div id="uploadCSV">
+					<form enctype="multipart/form-data" name="fileUploadForm" v-on:submit.prevent="uploadFile">
+
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" v-model="uploadFileName" readonly>
+								<span class="input-group-btn">
+									<label class="btn btn-primary">
+										Browse <input type="file" name="csvFile" v-on:change="fileInputChange" style="display: none" />
+									</label>
+								</span>
+							</div>
+						</div>
+
+						<div class="form-group text-center">
+							<input type="submit" class="btn btn-primary" />
+						</div>
+					</form>
+
+					<div class="row pull-down" v-if="progressBar">
+						<div class="progress">
+  						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+  						</div>
+						</div>
+					</div>
+
+					<div class="row pull-down">
+						<div class="text-center alert" role="alert" v-if="uploadStatusMessage" v-bind:class="{ 'alert-success': uploadSuccess, 'alert-danger': !uploadSuccess }">
+							<span v-if="uploadSuccess" style="font-weight: bold">Upload Success!</span>
+							<span v-else style="font-weight: bold">Upload Failed!</span>
+							{{ uploadStatusMessage }} <br>
+							{{ errorMessage }}
+						</div>						
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.3"></script>
+	<script src="/assets/js/headerNav.js"></script>
+	<script src="/assets/js/imei-app/uploadCSV.js"></script>
+</body>
+</html>

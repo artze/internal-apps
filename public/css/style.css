@@ -1,0 +1,19 @@
+@media (min-width: 1200px) and (max-width: 1500px) {
+	.col-lg-4 {
+		width: 50%;
+	}
+	.col-lg-offset-4 {
+		margin-left: 25%;
+	}
+}
+
+.pull-down {
+	margin-top: 6em;
+}
+
+/*.vertical-center {
+	min-height: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+}*/

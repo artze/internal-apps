@@ -1,0 +1,30 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+.background {
+	background: url('/assets/images/background.jpg');
+	background-size: cover;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.nav-link {
+	display: inline-block;
+	margin: 0px 20px;
+	border: 1.5px solid #e65b00;
+	padding: 10px 20px;
+	width: 200px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 700;
+	color: #e65b00;
+}
+
+.nav-link:hover {
+	color: #fff;
+	background-color: #e65b00;
+}

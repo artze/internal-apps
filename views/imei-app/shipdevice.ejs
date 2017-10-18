@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IMEI App</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/css/bootstrap-datepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+</head>
+<body>
+	<%- include('partials/header-nav') %>
+
+	<div class="container-fluid" id="shipment">
+		<div class="row pull-down">
+			<div class="col-lg-4 col-lg-offset-4">
+				<h1 class="text-center">Ship Device</h1>
+				<div class="panel panel-default">
+          <div class="panel-body">
+    				<div class="form-group">
+    					<input type="text" class="form-control" placeholder="Sales Order (SO) Number" v-model="shipment.so_number" v-on:change="resetCounter">
+    				</div>
+
+    				<div class="form-group">
+              <div class="input-group date" data-provide="datepicker">
+                <input type="text" class="form-control" id="shipmentDate" placeholder="Shipment Date" />
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </div>
+              </div>
+    				</div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="IMEI"
+              v-model="imeiInput"
+              v-bind:disabled="serial_numberInput || packaging_numberInput ? true : false"
+              v-on:keyup.enter="updateShipment">
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Serial Number"
+              v-model="serial_numberInput"
+              v-bind:disabled="imeiInput || packaging_numberInput ? true : false"
+              v-on:keyup.enter="updateShipment">
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Packaging Number"
+              v-model="packaging_numberInput"
+              v-bind:disabled="imeiInput || serial_numberInput ? true : false"
+              v-on:keyup.enter="updateShipment">
+            </div>          
+
+            <span class="label label-success" v-if="shipmentUpdateStatus == 'Shipment details recorded'">
+              {{ shipmentUpdateStatus }}: {{ updateCounter }}
+            </span>
+            <span class="label label-danger" v-else-if="shipmentUpdateStatus">{{ shipmentUpdateStatus }}</span>
+
+    				<button class="btn btn-primary pull-right" v-on:click="updateShipment">Ship!</button>
+          </div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-lg-offset-4">
+				<h1 class="text-center">List Devices in Sales Order</h1>
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Sales Order (SO) Number"
+          v-model="so_numberQuery"
+          v-on:keyup.enter="listDevices" />
+				</div>
+			</div>
+			<div class="col-lg-12">
+        <div v-if="devicesList">
+          <p><strong>Number of Devices: {{devicesList.length}}</strong></p>
+          <table class="table table-bordered">
+            <tr>
+              <th>
+                Model Name
+              </th>
+              <th>
+                IMEI
+              </th>
+              <th>
+                Serial Number
+              </th>
+              <th>
+                SW Version
+              </th>
+              <th>
+                FW Version
+              </th>
+              <th>
+                Shipment Date
+              </th>
+              <th>
+                Packaging Number
+              </th>
+            </tr>
+            <tr v-for="device in devicesList">
+              <td>
+                {{device.model_name}}
+              </td>
+              <td>
+                {{device.imei}}
+              </td>
+              <td>
+                {{device.serial_number}}
+              </td>
+              <td>
+                {{device.ReworkConfig ? device.ReworkConfig.sw_version : device.sw_version}}
+              </td>
+              <td>
+                {{device.ReworkConfig ? device.ReworkConfig.fw_version : device.fw_version}}
+              </td>
+              <td>
+                {{parseDate(device.shipment_date)}}
+              </td>
+              <td>
+                {{device.packaging_number}}
+              </td>                            
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-6 col-lg-offset-3 text-center alert alert-danger" role="alert" v-else-if="listDevicesStatus === 404">
+          SO Number Not Found
+        </div>
+      </div>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.3"></script>
+	<script src="/assets/js/headerNav.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="/assets/js/imei-app/shipDevice.js"></script>
+</body>
+</html>

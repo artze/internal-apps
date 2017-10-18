@@ -1,0 +1,8 @@
+<nav id="headerNav">
+	<ul class="nav nav-tabs">
+		<li role="presentation" v-bind:class="{ active: checkActiveLink('/imei-app/uploadCSV') }"><a href="/imei-app/uploadCSV">Upload CSV</a></li>
+		<li role="presentation" v-bind:class="{ active: checkActiveLink('/imei-app/search') }"><a href="/imei-app/search">Search Device</a></li>
+		<li role="presentation" v-bind:class="{ active: checkActiveLink('/imei-app/rework') }"><a href="/imei-app/rework">Rework</a></li>					
+		<li role="presentation" v-bind:class="{ active: checkActiveLink('/imei-app/shipdevice') }"><a href="/imei-app/shipdevice">Ship Device</a></li>			
+	</ul>
+</nav>

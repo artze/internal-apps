@@ -1,0 +1,14 @@
+before_script:
+  - apt-get update -qq && apt-get install -y -qq lftp
+
+stages:
+  - deploy
+
+job:
+  stage: deploy
+  before_script:
+  - apt-get update -qq && apt-get install -y -qq lftp
+  script:
+  - lftp -d -c "set ftp:ssl-allow no; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; cd $FTP_FOLDER; mirror --only-newer --reverse --ignore-time --exclude-glob .git* --exclude .git/"
+  only:
+    - master
